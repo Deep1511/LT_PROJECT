@@ -1,0 +1,159 @@
+Grammar
+
+    0 $accept: S $end
+
+    1 S: A
+    2  | B
+    3  | C
+
+    4 A: k k1 op dg eol
+
+    5 B: k k1 dg eol
+
+    6 C: k k1 op1 eol
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    dg (258) 4 5
+    k (259) 4 5 6
+    k1 (260) 4 5 6
+    op (261) 4
+    op1 (262) 6
+    eol (263) 4 5 6
+
+
+Nonterminals, with rules where they appear
+
+    $accept (9)
+        on left: 0
+    S (10)
+        on left: 1 2 3
+        on right: 0
+    A (11)
+        on left: 4
+        on right: 1
+    B (12)
+        on left: 5
+        on right: 2
+    C (13)
+        on left: 6
+        on right: 3
+
+
+State 0
+
+    0 $accept: • S $end
+
+    k  shift, and go to state 1
+
+    S  go to state 2
+    A  go to state 3
+    B  go to state 4
+    C  go to state 5
+
+
+State 1
+
+    4 A: k • k1 op dg eol
+    5 B: k • k1 dg eol
+    6 C: k • k1 op1 eol
+
+    k1  shift, and go to state 6
+
+
+State 2
+
+    0 $accept: S • $end
+
+    $end  shift, and go to state 7
+
+
+State 3
+
+    1 S: A •
+
+    $default  reduce using rule 1 (S)
+
+
+State 4
+
+    2 S: B •
+
+    $default  reduce using rule 2 (S)
+
+
+State 5
+
+    3 S: C •
+
+    $default  reduce using rule 3 (S)
+
+
+State 6
+
+    4 A: k k1 • op dg eol
+    5 B: k k1 • dg eol
+    6 C: k k1 • op1 eol
+
+    dg   shift, and go to state 8
+    op   shift, and go to state 9
+    op1  shift, and go to state 10
+
+
+State 7
+
+    0 $accept: S $end •
+
+    $default  accept
+
+
+State 8
+
+    5 B: k k1 dg • eol
+
+    eol  shift, and go to state 11
+
+
+State 9
+
+    4 A: k k1 op • dg eol
+
+    dg  shift, and go to state 12
+
+
+State 10
+
+    6 C: k k1 op1 • eol
+
+    eol  shift, and go to state 13
+
+
+State 11
+
+    5 B: k k1 dg eol •
+
+    $default  reduce using rule 5 (B)
+
+
+State 12
+
+    4 A: k k1 op dg • eol
+
+    eol  shift, and go to state 14
+
+
+State 13
+
+    6 C: k k1 op1 eol •
+
+    $default  reduce using rule 6 (C)
+
+
+State 14
+
+    4 A: k k1 op dg eol •
+
+    $default  reduce using rule 4 (A)
